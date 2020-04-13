@@ -1,26 +1,28 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React,{useState} from 'react'
+import NewToDo from './NewToDo'
+import ToDoList from './ToDoList'
 
-function App() {
+ function App() {
+  const [toDolist, setToDolist] = useState([
+    //{text:"task1", iscompleted: false , id:"ts1" },
+    //{text:"task2", iscompleted: false , id:"ts2" },
+    //{text:"task3", iscompleted: false , id:"ts3" },
+  ])
+  const Additemparent =(newtask)=>{
+    setToDolist([...toDolist,newtask])
+  }
+  const Deleteitemparent = (id)=>{
+    setToDolist(toDolist.filter((element)=> element.id !==id))
+  }
+  const Completeitemparent = (id)=>{
+    setToDolist(toDolist.map(element =>(id===element.id)?({...element,iscompleted:!element.iscompleted}):element))
+  }
+  
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <NewToDo additem={Additemparent}/>
+      <ToDoList itemlist={toDolist} deleteitem={Deleteitemparent} completeitem={Completeitemparent}/>
     </div>
-  );
+  )
 }
-
-export default App;
+export default App
